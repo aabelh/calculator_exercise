@@ -1,13 +1,18 @@
-package digital.metro.pricing.calculator;
+package digital.metro.pricing.calculator.service;
 
+import digital.metro.pricing.calculator.repository.PriceRepository;
+import digital.metro.pricing.calculator.model.Basket;
+import digital.metro.pricing.calculator.model.BasketCalculationResult;
+import digital.metro.pricing.calculator.model.BasketEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class BasketCalculatorService {
 
     private PriceRepository priceRepository;
@@ -29,15 +34,19 @@ public class BasketCalculatorService {
         return new BasketCalculationResult(basket.getCustomerId(), pricedArticles, totalAmount);
     }
 
-    public BigDecimal calculateArticle(BasketEntry be, String customerId) {
-        String ArticleId = be.getArticleId();
+    public BigDecimal calculateArticle(BasketEntry basketEntry, String customerId) {
+        String articleId = basketEntry.getArticleId();
 
         if (customerId != null) {
-            BigDecimal customerPrice = priceRepository.getPriceByArticleIdAndCustomerId(ArticleId, customerId);
-            if (customerPrice != null) {
-                return customerPrice;
+            var customerPrice = priceRepository.priceByArticleIdAndCustomerId(articleId, customerId);
+            if (customerPrice.isPresent()) {
+                return customerPrice.get();
             }
         }
-        return priceRepository.getpricebyarticleId(ArticleId);
+        return priceRepository.priceByArticleId(articleId);
+    }
+
+    public BigDecimal calculateArticle(BasketEntry basketEntry) {
+        return calculateArticle(basketEntry, null);
     }
 }
