@@ -40,13 +40,17 @@ public class BasketCalculatorService {
         if (customerId != null) {
             var customerPrice = priceRepository.priceByArticleIdAndCustomerId(articleId, customerId);
             if (customerPrice.isPresent()) {
-                return customerPrice.get();
+                return totalPricePerItem(customerPrice.get(), basketEntry.getQuantity());
             }
         }
-        return priceRepository.priceByArticleId(articleId);
+        return totalPricePerItem(priceRepository.priceByArticleId(articleId), basketEntry.getQuantity());
     }
 
     public BigDecimal calculateArticle(BasketEntry basketEntry) {
         return calculateArticle(basketEntry, null);
+    }
+
+    private BigDecimal totalPricePerItem(BigDecimal pricePerItem, BigDecimal quantity) {
+        return pricePerItem.multiply(quantity);
     }
 }
