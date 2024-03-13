@@ -15,6 +15,8 @@
 	<description>Pricing Calculator</description>
 	<properties>
 		<java.version>11</java.version>
+		<lombok.version>1.18.26</lombok.version>
+		<guava.version>r05</guava.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -26,6 +28,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
 		</dependency>
 	</dependencies>
 

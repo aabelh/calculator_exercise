@@ -2,6 +2,9 @@ package digital.metro.pricing.calculator.model;
 
 import java.util.Set;
 
+/**
+ * Represents the basket content for a customer
+ */
 public class Basket {
 
     private String customerId;
