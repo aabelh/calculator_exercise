@@ -15,8 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Responsible for calculating price for the content of {@link Basket}
- *
+ * Responsible for calculating price for the content of {@link Basket}.
  */
 @Service
 public class BasketCalculatorService {
@@ -72,8 +71,10 @@ public class BasketCalculatorService {
 
     private Price totalPricePerItem(Price pricePerItem, BasketEntry basketEntry) {
         Price price = pricePerItem.multiply(basketEntry.getQuantity());
-        logger.info("action=calculateBasket, step=calculateArticle, articleId={}, price={}, quantity={}, totalPrice={}, currencyCode={}",
-                basketEntry.getArticleId(), pricePerItem.getValue(), basketEntry.getQuantity(), price.getValue(), price.getCurrencyCode());
+        logger.info("action=calculateBasket, step=calculateArticle, articleId={}, price={}, " +
+                        "quantity={}, totalPrice={}, currencyCode={}",
+                basketEntry.getArticleId(), pricePerItem.getValue(), basketEntry.getQuantity(),
+                price.getValue(), price.getCurrencyCode());
         return price;
     }
 }
